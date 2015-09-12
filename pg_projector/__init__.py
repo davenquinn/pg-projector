@@ -10,6 +10,7 @@ Base = declarative_base()
 
 from .custom import setup_projections
 from .transform import transformation
+from .util import setup_names, srid
 
 def integrate_models(cls, nbase):
     new_bases = list(cls.__bases__) + [nbase]
@@ -38,4 +39,26 @@ def init_models(db_or_metadata):
         return integrate_models(Projection,model)
     else:
         return Projection
+
+def PGProjector(app, db):
+    """
+    Convenience method for Flask startup,
+    encompassing model and shortcut initialization.
+
+    Config options
+    PROJECTION_NAMES
+    WORLD_PROJECTION
+    LOCAL_PROJECTION
+    """
+    _ = lambda x: app.config.get(x,None)
+    p = app.config.get('PROJECTION_NAMES')
+    p.update(
+        world = _('WORLD_PROJECTION'),
+        local = _('LOCAL_PROJECTION'))
+
+    setup_names(**{k:v
+        for k,v in p.items()
+        if v is not None})
+
+    return init_models(db)
 
