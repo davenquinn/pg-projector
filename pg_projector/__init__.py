@@ -9,6 +9,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 from .custom import setup_projections
+from .transform import transformation
 
 def integrate_models(cls, nbase):
     new_bases = list(cls.__bases__) + [nbase]
