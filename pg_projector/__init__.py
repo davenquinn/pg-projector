@@ -4,4 +4,33 @@ __author__ = 'Daven Quinn'
 __email__ = 'code@davenquinn.com'
 __version__ = '0.1.0'
 
+from sqlalchemy.ext.declarative import declarative_base
+
+Base = declarative_base()
+
+from .custom import setup_projections
+
+def integrate_models(cls, nbase):
+    new_bases = list(cls.__bases__) + [nbase]
+    new_dict = dict(cls.__dict__)
+    new_dict.update(dict(nbase.__dict__))
+    return type.__new__(cls.__class__,
+        cls.__name__, tuple(new_bases), new_dict)
+
+def init_models(db_or_metadata):
+    try:
+        # We're using a Flask-SQLAlchemy database object
+        # We can integrate models to support fancy querying
+        # and shortcuts!
+        model = db_or_metadata.Model
+        Base.metadata = model.metadata
+    except AttributeError:
+        # Just a metadata object was provided
+        model = None
+        Base.metadata = db_or_metadata
+    from .models import Projection
+    if model is not None:
+        return integrate_models(Projection,model)
+    else:
+        return Projection
 
