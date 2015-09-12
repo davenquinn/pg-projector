@@ -18,6 +18,10 @@ def integrate_models(cls, nbase):
         cls.__name__, tuple(new_bases), new_dict)
 
 def init_models(db_or_metadata):
+    """
+    Set up database models using either Flask-SQLAlchemy object
+    or SQLAlchemy database metadata object.
+    """
     try:
         # We're using a Flask-SQLAlchemy database object
         # We can integrate models to support fancy querying
@@ -25,7 +29,7 @@ def init_models(db_or_metadata):
         model = db_or_metadata.Model
         Base.metadata = model.metadata
     except AttributeError:
-        # Just a metadata object was provided
+        # A basic SQLAlchemy metadata object was provided
         model = None
         Base.metadata = db_or_metadata
     from .models import Projection
