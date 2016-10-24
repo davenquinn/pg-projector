@@ -5,9 +5,6 @@ The PostGIS Projector provides an SQLAlchemy module to describe the `spatial_ref
 It is designed to provide a unified way to interact with coordinate reference information
 in GIS projects that incorporate both Python and PostGIS.
 
-* Free software: BSD license
-* Documentation: https://pg_projector.readthedocs.org.
-
 Install using `pip install pg-projector` to use the version on PyPI.
 
 Features
