@@ -8,8 +8,6 @@ except ImportError:
     from distutils.core import setup
 
 
-readme = open('README.rst').read()
-
 requirements = [
     # TODO: put package requirements here
 ]
@@ -22,7 +20,6 @@ setup(
     name='pg_projector',
     version='0.1.0',
     description="The PostGIS Projector provides an SQLAlchemy module to describe and interact with the 'spatial_ref_sys' table in PostGIS.",
-    long_description=readme,
     author='Daven Quinn',
     author_email='daven@davenquinn.com',
     url='https://github.com/davenquinn/pg_projector',
