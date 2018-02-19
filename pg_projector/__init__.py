@@ -51,7 +51,7 @@ def PGProjector(app, db):
     LOCAL_PROJECTION
     """
     _ = lambda x: app.config.get(x,None)
-    p = app.config.get('PROJECTION_NAMES')
+    p = app.config.get('PROJECTION_NAMES', {})
     p.update(
         world = _('WORLD_PROJECTION'),
         local = _('LOCAL_PROJECTION'))
